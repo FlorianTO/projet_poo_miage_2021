@@ -26,9 +26,7 @@ public class ModelTodoList implements TodoList /* TODO */ {
 		// - La comparaison appliquée entre deux tâches
 		tasks = new PriorityQueue<Task>(31, new Comparator<Task>() {
 			@Override
-			public int compare(Task task1, Task task2) {
-				return 0;
-			}
+			public int compare(Task task1, Task task2) { return task1.compareTo(task2); }
 		});
 
 		// On initialise la priorité de la tâche en cours d'édition

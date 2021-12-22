@@ -3,17 +3,17 @@ package fr.ubordeaux.miage.s7.todolist.model;
 /*
  * Tâche
  */
-public class Task /*implements Comparable<Object>*/ {
+public class Task implements Comparable<Task> {
 
 	// TODO
-	private Integer num;
+	private final Integer num;
 	private static Integer count = 0;
 
 	// Elles possèdent une description
-	private String description;
+	private final String description;
 	
 	// Elles possèdent une priorité
-	private Priorities priority;
+	private final Priorities priority;
 
 	public Task(String description, Priorities priority) /* TODO */{
 		this.num = count ++;
@@ -39,4 +39,23 @@ public class Task /*implements Comparable<Object>*/ {
 		return description;
 	}
 
+	@Override
+	public int compareTo(Task task) {
+
+		if(task.getClass() == this.getClass())
+		{
+			System.out.println("Comparing : task1Prio->" + this.priority.getValue() + " - task2Prio->" + task.priority.getValue());
+			if(this.priority.getValue() > task.priority.getValue())
+				return 1;
+			else if(this.priority.getValue() < task.priority.getValue())
+				return -1;
+
+			if(this.num > task.num)
+				return 1;
+			else
+				return -1;
+		}
+		System.out.println("-2");
+		return -2;
+	}
 }
