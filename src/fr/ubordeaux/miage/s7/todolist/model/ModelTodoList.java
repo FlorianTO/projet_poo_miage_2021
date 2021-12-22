@@ -17,9 +17,6 @@ public class ModelTodoList implements TodoList /* TODO */ {
 	// La tâche actuellement réalisée (null si aucune)
 	private Task currentTask;
 
-	// TODO
-	private int numTask;
-
 	/*
 	 * Constructeur du modèle
 	 */
@@ -72,7 +69,7 @@ public class ModelTodoList implements TodoList /* TODO */ {
 	}
 	public void push() /* TODO */ {
 		// TODO
-		push(new Task(numTask++, getDescription(), priority));
+		push(new Task(getDescription(), priority));
 		System.out.println("Model: push(): " + size());
 	}
 
@@ -89,9 +86,8 @@ public class ModelTodoList implements TodoList /* TODO */ {
 	/*
 	 * Récupère la liste des tâches
 	 */
-	// TODO
 	public PriorityQueue<Task> getTasks() {
-		return tasks;
+		return new PriorityQueue<>(tasks) ;
 	}
 
 	/*

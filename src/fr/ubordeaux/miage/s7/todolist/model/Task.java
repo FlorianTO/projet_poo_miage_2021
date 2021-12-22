@@ -6,16 +6,19 @@ package fr.ubordeaux.miage.s7.todolist.model;
 public class Task /*implements Comparable<Object>*/ {
 
 	// TODO
-	Integer num;
+	private Integer num;
+	private static Integer count = 0;
 
 	// Elles possèdent une description
-	String description;
+	private String description;
 	
 	// Elles possèdent une priorité
-	Priorities priority;
+	private Priorities priority;
 
-	public Task(Integer num, String description, Priorities priority) /* TODO */{
-		this.num = num;
+	public Task(String description, Priorities priority) /* TODO */{
+		this.num = count ++;
+		System.out.println("count : " + count);
+		System.out.println("id : " + this.num);
 		this.description = description;
 		this.priority = priority;
 		// TODO
