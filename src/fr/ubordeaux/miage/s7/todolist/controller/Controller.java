@@ -28,7 +28,7 @@ public class Controller {
 		
 		buttonEventHandler.setView(view);
 		menuItemEventHandler.setView(view);
-		view.update(model);
+		model.addObserver(view);
 		view.show();
 	}
 

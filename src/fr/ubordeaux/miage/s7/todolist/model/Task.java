@@ -5,7 +5,6 @@ package fr.ubordeaux.miage.s7.todolist.model;
  */
 public class Task implements Comparable<Task> {
 
-	// TODO
 	private final Integer num;
 	private static Integer count = 0;
 
@@ -15,13 +14,12 @@ public class Task implements Comparable<Task> {
 	// Elles possèdent une priorité
 	private final Priorities priority;
 
-	public Task(String description, Priorities priority) /* TODO */{
+	public Task(String description, Priorities priority) {
 		this.num = count ++;
 		System.out.println("count : " + count);
 		System.out.println("id : " + this.num);
 		this.description = description;
 		this.priority = priority;
-		// TODO
 	}
 
 	/*

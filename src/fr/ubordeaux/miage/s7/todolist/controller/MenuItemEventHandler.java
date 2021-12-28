@@ -58,9 +58,6 @@ public class MenuItemEventHandler implements EventHandler<ActionEvent> {
 		default:
 			System.out.println("menuItem.getId(): " + menuItem.getId());
 		}
-
-		// On met à jour la vue
-		view.update(model);
 	}
 
 }

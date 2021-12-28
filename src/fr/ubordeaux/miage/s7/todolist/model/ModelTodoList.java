@@ -1,9 +1,15 @@
 package fr.ubordeaux.miage.s7.todolist.model;
 
+import fr.ubordeaux.miage.s7.todolist.view.Observer;
+
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.PriorityQueue;
 
-public class ModelTodoList implements TodoList /* TODO */ {
+public class ModelTodoList implements TodoList, Observable {
+
+	private List<Observer> observers = new ArrayList<>();
 
 	// Liste de priorité de tâches
 	private PriorityQueue<Task> tasks;
@@ -56,6 +62,7 @@ public class ModelTodoList implements TodoList /* TODO */ {
 	public void setPriority(Priorities priority) {
 		this.priority = priority;
 		System.out.println("Model: priority: " + this.priority);
+		notifyObservers();
 	}
 
 	/*
@@ -63,10 +70,12 @@ public class ModelTodoList implements TodoList /* TODO */ {
 	 */
 	private void push(Task task) /* TODO */ {
 		tasks.add(task);
+		notifyObservers();
 		// TODO
 	}
 	public void push() /* TODO */ {
 		// TODO
+		notifyObservers();
 		push(new Task(getDescription(), priority));
 		System.out.println("Model: push(): " + size());
 	}
@@ -79,6 +88,7 @@ public class ModelTodoList implements TodoList /* TODO */ {
 	public void pop() {
 		System.out.println("Model: pop(): " + this);
 		currentTask = tasks.poll();
+		notifyObservers();
 	}
 
 	/*
@@ -107,6 +117,13 @@ public class ModelTodoList implements TodoList /* TODO */ {
 	 */
 	public void setCurrentTask(Task currentTask) {
 		this.currentTask = currentTask;
+		notifyObservers();
+	}
+
+	private void notifyObservers() {
+		for (Observer observer : observers) {
+			observer.update(this);
+		}
 	}
 
 	/*
@@ -116,4 +133,13 @@ public class ModelTodoList implements TodoList /* TODO */ {
 		return description;
 	}
 
+	@Override
+	public void addObserver(Observer observer) {
+		this.observers.add(observer);
+	}
+
+	@Override
+	public void removeObserver(Observer observer) {
+		this.observers.remove(observer);
+	}
 }

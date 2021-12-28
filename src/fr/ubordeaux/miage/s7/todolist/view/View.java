@@ -4,6 +4,7 @@ import fr.ubordeaux.miage.s7.todolist.controller.ButtonEventHandler;
 import fr.ubordeaux.miage.s7.todolist.controller.KeyEventHandler;
 import fr.ubordeaux.miage.s7.todolist.controller.MenuItemEventHandler;
 import fr.ubordeaux.miage.s7.todolist.model.ModelTodoList;
+import fr.ubordeaux.miage.s7.todolist.model.Observable;
 import fr.ubordeaux.miage.s7.todolist.model.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,7 +22,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class View /* TODO */ {
+public class View implements Observer {
 
 	// fenêtre principale
 	private Stage stage;
@@ -166,23 +167,22 @@ public class View /* TODO */ {
 		dialog.show();
 	}
 
-	// Mise à jour du contenu de la fenêtre principale
-	public void update(ModelTodoList model) {
-		proceeds_btn.setText("Traiter une tâche (reste " + model.size() + ")");
-		if (model.size() == 0)
-			proceeds_btn.setDisable(true);
-		else
-			proceeds_btn.setDisable(false);
-		todo_ta.clear();
-		for (Task task : model.getTasks()) {
-			todo_ta.appendText(task.toString() + "\n");
-		}
-		menuButton.setText(model.getPriority().getText());
-	}
-
 	// Cache la fenêtre dialogue
 	public void hideModalWindow() {
 		dialog.hide();
 	}
 
+	@Override
+	public void update(Observable observable) {
+		if (observable instanceof ModelTodoList) {
+			ModelTodoList model = (ModelTodoList) observable;
+			proceeds_btn.setText("Traiter une tâche (reste " + model.size() + ")");
+			proceeds_btn.setDisable(model.size() == 0);
+			todo_ta.clear();
+			for (Task task : model.getTasks()) {
+				todo_ta.appendText(task.toString() + "\n");
+			}
+			menuButton.setText(model.getPriority().getText());
+		}
+	}
 }

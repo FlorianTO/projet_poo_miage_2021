@@ -37,7 +37,6 @@ public class ButtonEventHandler implements EventHandler<ActionEvent> {
 		// Bouton "Traiter une tâche..."
 		case "proceeds_btn":
 			model.pop();
-			view.update(model);
 			view.showModalWindow("Tâche à réaliser", model.getCurrentTask().getDescription(), "Tâche terminée");
 			break;
 
@@ -54,8 +53,6 @@ public class ButtonEventHandler implements EventHandler<ActionEvent> {
 				view.showModalWindow("ERROR", Code.TOO_SHORT_DESCRIPTION_TEXT.toString(), "OK");
 			else
 				model.push();
-			// On met à jour la vue
-			view.update(model);
 			break;
 
 		// Bouton "Tâche réalisée"
