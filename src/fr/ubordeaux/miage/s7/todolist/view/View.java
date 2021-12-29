@@ -117,6 +117,8 @@ public class View implements Observer {
 		// Bouton "Traiter..."
 		proceeds_btn = new Button();
 		proceeds_btn.setId("proceeds_btn");
+		proceeds_btn.setText("Traiter une tâche (reste 0)");
+		proceeds_btn.setDisable(true);
 		proceeds_btn.setOnAction(buttonEventHandler);
 		proceeds_btn.setMaxWidth(Double.MAX_VALUE);
 		proceeds_btn.setMaxHeight(Double.MAX_VALUE);
