@@ -74,9 +74,17 @@ public class ModelTodoList implements TodoList, Observable {
 		tasks.add(task);
 		// TODO
 	}
-	public void push() /* TODO */ {
-		// TODO
-		push(new Task(getDescription(), priority));
+	public void push() throws TaskException /* TODO */ {
+		if(!tasks.isEmpty()){
+			for (Task t: tasks)
+				if(t.getDescription() == getDescription() && t.getPriority().getValue() == priority.getValue()) throw new TaskException(Code.ALREADY_EXISTS);
+		}
+
+		try {
+			push(new Task(getDescription(), priority));
+		}catch (TaskException ex) {
+			ex.displayMessage();
+		}
 		System.out.println("Model: push(): " + size());
 	}
 

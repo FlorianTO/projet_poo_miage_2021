@@ -14,7 +14,12 @@ public class Task implements Comparable<Task> {
 	// Elles possèdent une priorité
 	private final Priorities priority;
 
-	public Task(String description, Priorities priority) {
+	public Task(String description, Priorities priority) throws TaskException {
+		if(description == null || description == "" || priority == null) throw new TaskException(Code.BAD_DESCRIPTION);
+		if(description.length() <= 4) throw new TaskException(Code.TOO_SHORT_DESCRIPTION_TEXT);
+		if(priority.getValue() < 1) throw new TaskException(Code.TOO_LOW_PRIORITY);
+		if(priority.getValue() > 4) throw new TaskException(Code.TOO_HIGH_PRIORITY);
+
 		this.num = count ++;
 		System.out.println("count : " + count);
 		System.out.println("id : " + this.num);
@@ -35,6 +40,10 @@ public class Task implements Comparable<Task> {
 	 */
 	public String getDescription() {
 		return description;
+	}
+
+	public Priorities getPriority() {
+		return priority;
 	}
 
 	@Override

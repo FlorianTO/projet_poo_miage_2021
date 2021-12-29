@@ -8,7 +8,7 @@ public interface TodoList {
 	/*
 	 * Ajoute la tâche en cours d'édition à la liste des tâches à faire
 	 */
-	void push() /* TODO */;
+	void push() throws TaskException /* TODO */;
 
 	/*
 	 * Supprime la tâche la plus prioritaire de la liste de tâches.

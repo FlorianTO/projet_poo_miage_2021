@@ -34,9 +34,8 @@ public class ButtonEventHandler implements EventHandler<ActionEvent> {
 
 			// Bouton "Traiter une tâche..."
 			case "proceeds_btn":
-				model.pop();
+				new ProceedsState().handle(model);
 				view.showModalWindow("Tâche à réaliser", model.getCurrentTask().getDescription(), "Tâche terminée");
-				model.setState(new ProceedsState());
 				break;
 
 			// Bouton "Ajouter la tâche..."
@@ -44,36 +43,34 @@ public class ButtonEventHandler implements EventHandler<ActionEvent> {
 				// TODO
 				if (model.getDescription() == null) {
 					view.showModalWindow("ERROR", Code.NOT_DEFINED.toString(), "OK");
-					model.setState(new ErrorState());
+					new ErrorState().handle(model);
 				}
 				else if (model.getPriority() == null) {
 					view.showModalWindow("ERROR", Code.NOT_DEFINED.toString(), "OK");
-					model.setState(new ErrorState());
+					new ErrorState().handle(model);
 				}
 				else if (model.getPriority().getValue() < Priorities.HIGH.getValue()){
 					view.showModalWindow("ERROR", Code.BAD_PRIORITY.toString(), "OK");
-					model.setState(new ErrorState());
+					new ErrorState().handle(model);
 				}
 				else if(model.getDescription().length() < 4){
 					view.showModalWindow("ERROR",Code.TOO_SHORT_DESCRIPTION_TEXT.toString(),"OK");
-					model.setState(new ErrorState());
+					new ErrorState().handle(model);
 				} else {
-					model.push();
-					model.setState(new EditingState());
+					new EditingState().handle(model);
 				}
 				break;
 
 		// Bouton "Tâche réalisée"
 		case "dialog_btn":
 			view.hideModalWindow();
-			model.setState(new EditingState());
+			new EditingState().handle(model);
 			break;
 
 		// Bouton inconnu
 		default:
 			System.err.println("button.getId(): " + button.getId());
 		}
-		model.getCurrentState().handle(model);
 	}
 
 }
