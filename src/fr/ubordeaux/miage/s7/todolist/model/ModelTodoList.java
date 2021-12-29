@@ -23,6 +23,8 @@ public class ModelTodoList implements TodoList, Observable {
 	// La tâche actuellement réalisée (null si aucune)
 	private Task currentTask;
 
+	private State currentState;
+
 	/*
 	 * Constructeur du modèle
 	 */
@@ -38,7 +40,8 @@ public class ModelTodoList implements TodoList, Observable {
 		// On initialise la priorité de la tâche en cours d'édition
 		// à medium
 		priority = Priorities.MEDIUM;
-		
+
+		currentState = new EditingState();
 	}
 
 	/*
@@ -62,7 +65,6 @@ public class ModelTodoList implements TodoList, Observable {
 	public void setPriority(Priorities priority) {
 		this.priority = priority;
 		System.out.println("Model: priority: " + this.priority);
-		notifyObservers();
 	}
 
 	/*
@@ -70,12 +72,10 @@ public class ModelTodoList implements TodoList, Observable {
 	 */
 	private void push(Task task) /* TODO */ {
 		tasks.add(task);
-		notifyObservers();
 		// TODO
 	}
 	public void push() /* TODO */ {
 		// TODO
-		notifyObservers();
 		push(new Task(getDescription(), priority));
 		System.out.println("Model: push(): " + size());
 	}
@@ -88,7 +88,6 @@ public class ModelTodoList implements TodoList, Observable {
 	public void pop() {
 		System.out.println("Model: pop(): " + this);
 		currentTask = tasks.poll();
-		notifyObservers();
 	}
 
 	/*
@@ -117,10 +116,9 @@ public class ModelTodoList implements TodoList, Observable {
 	 */
 	public void setCurrentTask(Task currentTask) {
 		this.currentTask = currentTask;
-		notifyObservers();
 	}
 
-	private void notifyObservers() {
+	public void notifyObservers() {
 		for (Observer observer : observers) {
 			observer.update(this);
 		}
@@ -141,5 +139,13 @@ public class ModelTodoList implements TodoList, Observable {
 	@Override
 	public void removeObserver(Observer observer) {
 		this.observers.remove(observer);
+	}
+
+	public State getCurrentState() {
+		return currentState;
+	}
+
+	public void setState(State state) {
+		this.currentState = state;
 	}
 }
